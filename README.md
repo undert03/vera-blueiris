@@ -1,4 +1,4 @@
-Vera Blur Iris Cam Plugin Version 0.2
+Vera Blue Iris Cam Plugin Version 0.2
 ===========
 ![Blue Iris Vera Plugin](https://dl.dropboxusercontent.com/u/617004/BlueIris/Vera-Blue-Iris_LG.png "Blue Iris Vera Plugin")
 
