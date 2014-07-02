@@ -1,6 +1,5 @@
 Vera Blur Iris Cam Plugin Version 0.2
 ===========
-![Blue Iris Vera Plugin](https://dl.dropboxusercontent.com/u/617004/BlueIris/Vera-Blue-Iris_LG.png "Blue Iris Vera Plugin")
 
 Plugin Programmed by undertoe@chemlab.org
 
@@ -56,13 +55,3 @@ Username: your Blue Iris username
 Password: your Blue Iris password
 
 Save and Reload Vera
-
-
-Screenshots
------------
-
-![Vera Blue Iris - Add Device - Different States](https://dl.dropboxusercontent.com/u/617004/BlueIris/Add-Device.jpg "Vera Blue Iris - Add Device")
-
-![Roomba RooWifi Vera Plugin - Advance Tab](https://dl.dropboxusercontent.com/u/617004/Roomba/Screenshot-1.jpg "Roomba RooWifi Vera Plugin - Advance Tab")
-
-![Roomba RooWifi Vera Plugin - Scene Triggers](https://dl.dropboxusercontent.com/u/617004/Roomba/Roomba-Triggers.jpg "Roomba RooWifi Vera Plugin - Scene Triggers")

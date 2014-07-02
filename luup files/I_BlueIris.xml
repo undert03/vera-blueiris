@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<implementation>
+   <functions>
+   		local CAM_SID = "urn:micasaverde-com:serviceId:Camera1"
+   		local HAD_SID = "urn:micasaverde-com:serviceId:HaDevice1"
+   		local DEFAULT_ADDRESS = "Enter BlueIris IP and Port"
+   		local HTTPtimeout = 10
+   		local DEF_camname = "index"
+   		local DEBUG = false
+   	
+			local function BI_Log(text)
+				local id = PARENT_DEVICE or "unknown"
+				luup.log("BlueIris Plugin #" .. id .. " " .. text)
+		  end
+
+			local function BI_CAM_GetVar( VarName, DefaultVal )
+				local Gval = luup.variable_get(CAM_SID, VarName, parentDevice)
+				if ( Gval == nil ) then
+					luup.variable_set(CAM_SID, VarName, DefaultVal, parentDevice)
+					Gval = DefaultVal
+				end
+				return Gval
+			end
+		  
+      function lug_startup(parentDevice)
+      	PARENT_DEVICE = parentDevice
+      	BI_Log("Version 0.2 Started")
+      	
+      	local Cname = luup.attr_get("name", parentDevice)
+      	if ( (Cname == "") or (Cname == "IP Camera Ext") ) then
+      		luup.attr_set("name", "Blue Iris CAM #"..parentDevice, parentDevice)
+      	end
+      	
+      	lug_ip 				= luup.devices[parentDevice].ip
+        lug_username 	= luup.attr_get("username", parentDevice)
+        lug_password 	= luup.attr_get("password", parentDevice)
+        lug_camname 	= BI_CAM_GetVar("CameraName", DEF_camname )
+                
+				BI_CAM_GetVar( "URL", "/image/".. lug_camname )
+				BI_CAM_GetVar( "DirectStreamingURL", "/mjpg/".. lug_camname .."/video.mjpg" )
+				
+				-- Force Video URL based on cam name
+				local set_camurl = "/image/".. lug_camname .."?q=80&amp;s=80"
+				luup.variable_set(CAM_SID, "URL", set_camurl, parentDevice)
+				
+				-- Force MJPEG Stream based on cam name
+				set_mjpgurl = "/mjpg/".. lug_camname .."/video.mjpg"
+				luup.variable_set(CAM_SID, "DirectStreamingURL", set_mjpgurl, parentDevice)
+				BI_Log("Video URL: " .. lug_ip .. set_camurl)
+				
+				-- Force to Cam Group
+				if luup.devices[parentDevice].category_num ~= 6 then
+					luup.attr_set("category_num", "6", parentDevice)
+				end
+				
+				-- Turn on all features
+				local commands = luup.variable_get(HAD_SID, "Commands", parentDevice)
+				if not commands then
+					commands = "camera_full_screen,camera_up,camera_down,camera_left,camera_right,camera_zoom_in,camera_zoom_out,camera_horizontal_patrol,camera_vertical_patrol,camera_stop_patrol,camera_preset,camera_archive_snapshot"
+					luup.variable_set(HAD_SID, "Commands", commands, parentDevice)
+				end
+      end
+   </functions>
+   <startup>lug_startup</startup>
+   <actionList>
+      <action>
+         <serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
+         <name>MoveLeft</name>
+         <job>
+            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=0", HTTPtimeout, lug_username, lug_password)
+         </job>
+      </action>
+      <action>
+         <serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
+         <name>MoveRight</name>
+         <job>
+            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=1", HTTPtimeout, lug_username, lug_password)
+         </job>
+      </action>
+      <action>
+         <serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
+         <name>MoveUp</name>
+         <job>
+            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=2", HTTPtimeout, lug_username, lug_password)
+         </job>
+      </action>
+      <action>
+         <serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
+         <name>MoveDown</name>
+         <job>
+            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=3", HTTPtimeout, lug_username, lug_password)
+         </job>
+      </action>
+      <action>
+         <serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
+         <name>ZoomOut</name>
+         <job>
+            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=6", HTTPtimeout, lug_username, lug_password)
+         </job>
+      </action>
+      <action>
+         <serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
+         <name>ZoomIn</name>
+         <job>
+           	luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=5", HTTPtimeout, lug_username, lug_password)
+         </job>
+      </action>
+			<action>
+				<serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
+				<name>GoToPreset</name>
+				<job>
+					local presetNumber = tonumber(lul_settings.presetNumber, 10) or 1
+					presetNumber = tonumber( presetNumber ) + 7
+					BI_Log("Preset : " .. presetNumber)
+					BI_Log("Login : " .. lug_username)
+					luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=" .. presetNumber, HTTPtimeout, lug_username, lug_password)
+				</job>
+			</action>
+   </actionList>
+</implementation>

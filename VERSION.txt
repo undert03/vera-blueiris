@@ -1,0 +1,5 @@
+Revisions
+	
+0.2 - Inital release of plugin
+	Blue Iris Cam support with Full PTZ intergration
+	Preset functional
