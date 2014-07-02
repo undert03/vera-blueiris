@@ -63,6 +63,6 @@ Screenshots
 
 ![Vera Blue Iris - Add Device - Different States](https://dl.dropboxusercontent.com/u/617004/BlueIris/Add-Device.jpg "Vera Blue Iris - Add Device")
 
-![Roomba RooWifi Vera Plugin - Advance Tab](https://dl.dropboxusercontent.com/u/617004/Roomba/Screenshot-1.jpg "Roomba RooWifi Vera Plugin - Advance Tab")
+![Vera Blue Iris - Cam View](https://dl.dropboxusercontent.com/u/617004/BlueIris/Cam-View.jpg "Vera Blue Iris - Cam View")
 
-![Roomba RooWifi Vera Plugin - Scene Triggers](https://dl.dropboxusercontent.com/u/617004/Roomba/Roomba-Triggers.jpg "Roomba RooWifi Vera Plugin - Scene Triggers")
+![Vera Blue Iris - Advance Tab](https://dl.dropboxusercontent.com/u/617004/BlueIris/Advance.jpg "Vera Blue Iris - Advance Tab")
