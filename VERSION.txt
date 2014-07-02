@@ -1,5 +1,6 @@
 Revisions
 	
-0.2 - Inital release of plugin
-	Blue Iris Cam support with Full PTZ intergration
-	Preset functional
+0.2 - Initial release of plugin
+ 			Blue Iris Cam support with Full PTZ integration
+			Preset functional
+			Username and Password Support
