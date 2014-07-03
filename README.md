@@ -21,7 +21,8 @@ Blue Iris system running with cameras configured in blue iris
 Install Video
 -----------
 
-http://youtu.be/flDc84wrue8
+[![Vera Blue Iris Plugin How-to Video](http://img.youtube.com/vi/flDc84wrue8/0.jpg)](http://www.youtube.com/watch?v=YflDc84wrue8)
+
 
 Installation
 -----------
