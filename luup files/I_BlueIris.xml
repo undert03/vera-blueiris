@@ -96,7 +96,7 @@
 				BI_CAM_GetVar( "DirectStreamingURL", "/mjpg/".. lug_camname .."/video.mjpg" )
 				
 				-- Force Video URL based on cam name
-				local set_camurl = "/image/".. lug_camname .."?q=80&amp;s=80&amp;time="
+				local set_camurl = "/image/".. lug_camname .."?q=80&amp;s=80&amp;time=now"
 				luup.variable_set(CAM_SID, "URL", set_camurl, parentDevice)
 				
 				-- Force MJPEG Stream based on cam name
