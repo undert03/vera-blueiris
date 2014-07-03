@@ -18,6 +18,11 @@ Requirements
 
 Blue Iris system running with cameras configured in blue iris
 
+Install Video
+-----------
+
+http://youtu.be/flDc84wrue8
+
 Installation
 -----------
 
@@ -56,6 +61,55 @@ Username: your Blue Iris username
 Password: your Blue Iris password
 
 Save and Reload Vera
+
+
+Configuration of Motion Detection Sensor ( v0.3+ Only )
+-----------
+
+It is recommended you have your camera feed setup and working in vera before you proceed to configure
+the motion sensor.
+
+VERA CONFIGURATION
+
+- Got your camera you want to configure for motion sensor and click the edit button (wrench)
+
+- Go to the Advance Tab
+
+- Scroll until you see "EnableMotionSensor" and change the value to 1
+	(0 = Disable Motion Sensor | 1 = Enable Montion Sensor)
+
+- Close the settings and the Red Save button, this will reload vera and create the motion sensor
+
+- Find your montion sensor "Devices" > "Sensor Tab" it defaults to the name of the Camera followed by "Motion Sensor"
+
+- Click on Edit (wrench) > Settings Tab and get your device ID number (REMEMBER THIS). This is how we tell Blue Iris to trigger the sensor
+
+- This is all you need to do in Vera the next step is to configure Alert trigger in Blue Iris for the Sensor in Vera
+
+BLUE IRIS CONFIGURATION
+
+- From your zip file you downloaded take the folder named "biveratools" and copy it to your C: drive
+
+- So the path to this folder should be C:\biveratools and the there should be 2 files in that folder
+
+- Open Blue Iris
+
+- Right Click on the Camera that you want to configure to Trigger Vera for motion sensor
+
+- Click "Camera Properties"
+
+- Click the "Alerts" tab
+
+- Click Run a program or execute a script and hit Configure
+
+- Click the "..." button next to the File file and browse to the file C:\biveratools\blueiris2vera.bat
+
+- In Parameters Box enter the numerical sensor id# from vera in the step where i said REMEMBER THIS
+
+- That is it once you have entered all this you can hit the "Test" button in the bottom left hand corner of Blue Iris
+and if you go into Vera and see that motion sensor it should then trigger red for 30 secs and then shut off.
+
+- If everything works you can then OK and OK out of the camera properties settings
 
 
 Screenshots

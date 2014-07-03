@@ -1,5 +1,7 @@
 Revisions
-	
+
+0.3 - Added Motion Detection Sensor Support in Vera
+
 0.2 - Initial release of plugin
  			Blue Iris Cam support with Full PTZ integration
 			Preset functional

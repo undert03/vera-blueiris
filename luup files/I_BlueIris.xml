@@ -2,10 +2,14 @@
 <implementation>
    <functions>
    		local CAM_SID = "urn:micasaverde-com:serviceId:Camera1"
+   		local CMD_SID = "urn:micasaverde-com:serviceId:CameraMotionDetection1"
    		local HAD_SID = "urn:micasaverde-com:serviceId:HaDevice1"
+   		local SES_SID = "urn:micasaverde-com:serviceId:SecuritySensor1"
+   		
    		local DEFAULT_ADDRESS = "Enter BlueIris IP and Port"
    		local HTTPtimeout = 10
    		local DEF_camname = "index"
+			local DEF_Triptimeout = 30 -- 30 seconds
    		local DEBUG = false
    	
 			local function BI_Log(text)
@@ -21,6 +25,57 @@
 				end
 				return Gval
 			end
+
+			function untrip (sensorId)
+				sensorId = tonumber(sensorId, 10)
+				local lastTrip = luup.variable_get("urn:micasaverde-com:serviceId:SecuritySensor1", "LastTrip", sensorId) or 0
+				local now = os.time()
+				if os.difftime(now, lastTrip) >= DEF_Triptimeout then
+					luup.variable_set("urn:micasaverde-com:serviceId:SecuritySensor1", "Tripped", "0", sensorId)
+				end
+			end
+	
+	
+			function trip (request, parameters)
+				local sensorId = tonumber(parameters.sensor_id, 10) or 0
+				if sensorId == 0 then
+					return "failed"
+				end
+	
+				luup.variable_set("urn:micasaverde-com:serviceId:SecuritySensor1", "Tripped", "1", sensorId)
+				luup.variable_set("urn:micasaverde-com:serviceId:SecuritySensor1", "LastTrip", tostring(os.time()), sensorId)
+	
+				luup.call_delay("untrip", DEF_Triptimeout, parameters.sensor_id)
+	
+				return "OK"
+			end
+
+			local function BI_getMotionSensorId()
+				local sensorId = tonumber(luup.variable_get(CMD_SID, "MotionSensorID", PARENT_DEVICE) , 10) or 0
+				if sensorId > 0 then
+					return sensorId
+				end
+	
+				-- Get the motion sensor's device ID.
+				local altid = "blueiris_".. PARENT_DEVICE .."_sensor"
+				for dev, attr in pairs(luup.devices) do
+					if attr.id == altid then
+						sensorId = dev
+						break
+					end
+				end
+	
+				if sensorId == 0 then
+					-- We haven't created the motion sensor. Set State to STATE_CREATE_MS.
+					-- luup.variable_set(CMD_SID, "State", STATE_CREATE_MS, lug_device)
+					return
+				end
+	
+				-- Store the motion sensor ID in a variable.
+				-- luup.log("(".. luup.devices[lug_device].description .."::State=".. state ..") Motion sensor is device #".. sensorId ..".")
+				luup.variable_set(CMD_SID, "MotionSensorID", tostring(sensorId), PARENT_DEVICE)
+				return sensorId
+			end
 		  
       function lug_startup(parentDevice)
       	PARENT_DEVICE = parentDevice
@@ -35,18 +90,19 @@
         lug_username 	= luup.attr_get("username", parentDevice)
         lug_password 	= luup.attr_get("password", parentDevice)
         lug_camname 	= BI_CAM_GetVar("CameraName", DEF_camname )
-                
+        lug_montion 	= BI_CAM_GetVar("EnableMotionSensor", 0 )
+          
 				BI_CAM_GetVar( "URL", "/image/".. lug_camname )
 				BI_CAM_GetVar( "DirectStreamingURL", "/mjpg/".. lug_camname .."/video.mjpg" )
 				
 				-- Force Video URL based on cam name
-				local set_camurl = "/image/".. lug_camname .."?q=80&amp;s=80"
+				local set_camurl = "/image/".. lug_camname .."?q=80&amp;s=80&amp;time="
 				luup.variable_set(CAM_SID, "URL", set_camurl, parentDevice)
 				
 				-- Force MJPEG Stream based on cam name
 				set_mjpgurl = "/mjpg/".. lug_camname .."/video.mjpg"
 				luup.variable_set(CAM_SID, "DirectStreamingURL", set_mjpgurl, parentDevice)
-				BI_Log("Video URL: " .. lug_ip .. set_camurl)
+				if(DEBUG) then BI_Log("Video URL: " .. lug_ip .. set_camurl) end
 				
 				-- Force to Cam Group
 				if luup.devices[parentDevice].category_num ~= 6 then
@@ -58,6 +114,41 @@
 				if not commands then
 					commands = "camera_full_screen,camera_up,camera_down,camera_left,camera_right,camera_zoom_in,camera_zoom_out,camera_horizontal_patrol,camera_vertical_patrol,camera_stop_patrol,camera_preset,camera_archive_snapshot"
 					luup.variable_set(HAD_SID, "Commands", commands, parentDevice)
+				end
+				
+				-- Configure Motion Sensor
+				local MotionSID = BI_getMotionSensorId() or 0
+				
+				if ( (lug_montion == "1") and ( tonumber(MotionSID) == 0) ) then
+					-- Create a Montion Sensor
+					BI_Log("Configuring Montion Sensor for Blue Iris Cam #" .. parentDevice )
+					local ptr = luup.chdev.start(parentDevice)
+					luup.chdev.append(parentDevice, ptr, "blueiris_".. parentDevice .."_sensor", luup.devices[parentDevice].description .." Motion Sensor", "urn:schemas-micasaverde-com:device:MotionSensor:1", "D_MotionSensor1.xml", "", SES_SID ..",Armed=1\n".. SES_SID ..",Tripped=0", true, false)
+					luup.chdev.sync(parentDevice, ptr)
+					
+					MotionSID = BI_getMotionSensorId()			
+					
+					BI_Log("Motion Sensor Setup: " .. tostring( MotionSID ) )
+					
+					luup.variable_set(SES_SID, "OnTime", tostring(DEF_Triptimeout), MotionSID)
+					luup.register_handler("trip", "blueiris_tripped")
+				elseif ( (lug_montion == "0") and ( tonumber(MotionSID) > 0) ) then
+				
+					-- Delete Motion Sensor
+					BI_Log("Not Implemented but we would delete Sensor ID# " .. tostring(MotionSID) )
+				
+				elseif (tonumber(MotionSID) > 0) then
+					-- Check if Name Changed
+					local CSname = luup.devices[tonumber(MotionSID)].name
+					local NSname = luup.devices[parentDevice].description .." Motion Sensor"
+					if ( CSname ~= NSname ) then
+						luup.attr_set("name", NSname, MotionSID)
+					end
+					luup.variable_set(SES_SID, "OnTime", tostring(DEF_Triptimeout), MotionSID)
+					luup.register_handler("trip", "blueiris_tripped")
+
+				else
+					if(DEBUG) then BI_Log("SKIPPING Montion Sensor for Blue Iris Cam #" .. parentDevice ) end
 				end
       end
    </functions>
@@ -111,8 +202,6 @@
 				<job>
 					local presetNumber = tonumber(lul_settings.presetNumber, 10) or 1
 					presetNumber = tonumber( presetNumber ) + 7
-					BI_Log("Preset : " .. presetNumber)
-					BI_Log("Login : " .. lug_username)
 					luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=" .. presetNumber, HTTPtimeout, lug_username, lug_password)
 				</job>
 			</action>
