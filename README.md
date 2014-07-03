@@ -33,8 +33,11 @@ Installation
 - Add I_BlueIris.xml under the luup files folder you extracted from the zip *check restart luup after upload
 
 - Create a new device (apps --> develop apps --> Create device), enter the following
+
 Upnp Device Filename: D_DigitalSecurityCamera2.xml
+
 Upnp Implementation Filename: I_BlueIris.xml
+
 Ip Address: <IP ADDRESS OF BLUE IRIS server>:<Port>
 
 Click "Create Device"
@@ -57,8 +60,11 @@ CameraName : <Enter the Camera Short Name from Blue Iris Config>
 If your web interface has a username and password (normal this is not the case)
 You can configure it by going to the Settings Tab and scrolling all the way to the bottom
 
+
 Username: your Blue Iris username
+
 Password: your Blue Iris password
+
 
 Save and Reload Vera
 
@@ -69,6 +75,7 @@ Configuration of Motion Detection Sensor ( v0.3+ Only )
 It is recommended you have your camera feed setup and working in vera before you proceed to configure
 the motion sensor.
 
+
 VERA CONFIGURATION
 
 - Got your camera you want to configure for motion sensor and click the edit button (wrench)
@@ -76,6 +83,7 @@ VERA CONFIGURATION
 - Go to the Advance Tab
 
 - Scroll until you see "EnableMotionSensor" and change the value to 1
+	
 	(0 = Disable Motion Sensor | 1 = Enable Montion Sensor)
 
 - Close the settings and the Red Save button, this will reload vera and create the motion sensor
@@ -85,6 +93,7 @@ VERA CONFIGURATION
 - Click on Edit (wrench) > Settings Tab and get your device ID number (REMEMBER THIS). This is how we tell Blue Iris to trigger the sensor
 
 - This is all you need to do in Vera the next step is to configure Alert trigger in Blue Iris for the Sensor in Vera
+
 
 BLUE IRIS CONFIGURATION
 
@@ -106,7 +115,18 @@ BLUE IRIS CONFIGURATION
 
 - In Parameters Box enter Your Vera IP address then a space followed by the numerical sensor id# from vera in the step where i said REMEMBER THIS
 
+Example
+
+Vera IP address is 192.168.1.2
+
+Your Sensor ID is : 123
+
+You would put this in the Parameters Box: 192.168.1.2 123
+
+*It is very important to put the space in between the Vera IP and Sensor ID
+
 - That is it once you have entered all this you can hit the "Test" button in the bottom left hand corner of Blue Iris
+
 and if you go into Vera and see that motion sensor it should then trigger red for 30 secs and then shut off.
 
 - If everything works you can then OK and OK out of the camera properties settings
