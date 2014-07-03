@@ -125,9 +125,7 @@ You would put this in the Parameters Box: 192.168.1.2 123
 
 *It is very important to put the space in between the Vera IP and Sensor ID
 ```
-- That is it once you have entered all this you can hit the "Test" button in the bottom left hand corner of Blue Iris
-
-and if you go into Vera and see that motion sensor it should then trigger red for 30 secs and then shut off.
+- That is it once you have entered all this you can hit the "Test" button in the bottom left hand corner of Blue Iris. If you go into Vera and see that motion sensor it should then trigger red for 30 secs and then shut off.
 
 - If everything works you can then OK and OK out of the camera properties settings
 
