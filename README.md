@@ -114,7 +114,7 @@ BLUE IRIS CONFIGURATION
 - Click the "..." button next to the File file and browse to the file C:\biveratools\blueiris2vera.bat
 
 - In Parameters Box enter Your Vera IP address then a space followed by the numerical sensor id# from vera in the step where i said REMEMBER THIS
-
+```
 Example
 
 Vera IP address is 192.168.1.2
@@ -124,7 +124,7 @@ Your Sensor ID is : 123
 You would put this in the Parameters Box: 192.168.1.2 123
 
 *It is very important to put the space in between the Vera IP and Sensor ID
-
+```
 - That is it once you have entered all this you can hit the "Test" button in the bottom left hand corner of Blue Iris
 
 and if you go into Vera and see that motion sensor it should then trigger red for 30 secs and then shut off.
