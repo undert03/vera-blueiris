@@ -1,4 +1,4 @@
-Vera Blue Iris Cam Plugin Version 0.2
+Vera Blue Iris Cam Plugin Version 0.3
 ===========
 
 Plugin Programmed by undertoe@chemlab.org
