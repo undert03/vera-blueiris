@@ -147,7 +147,9 @@ Left = Preset 1, Up = Preset 2, Right = Preset 3, Down = Preset 4. This is usefu
 and want to gain preset control on a mobile app that may not have presets (ie: iVera)
 
 **Zoom2Preset** : ( **0** = Disabled, **1** = Enabled) - This option converts your ZoomIn and ZoomOut to Presets.
-ZoomIn = Preset 1, ZoomOut = Preset 2. If you have Pan2Preset enabled, ZoomIn = Preset 5, ZoomOut = Preset 6
+ZoomIn = Preset 1, ZoomOut = Preset 2. If you have Pan2Preset enabled, ZoomIn = Preset 5, ZoomOut = Preset 6. This option
+is useful for camera's that don't have Zoom function and you want a way to control presets in mobile apps that do not have
+presets integrated (ie: iVera)
 
 **ReverseHorizontal** : ( **0** = Disabled, **1** = Enabled) - Reverse the control of Left and Right. Pan2Preset & Zoom2Preset must be
 set to 0 for this to work. I also recommend letting Blue Iris handle all the control configuration but just in case someone needs
