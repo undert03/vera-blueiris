@@ -1,4 +1,4 @@
-Vera Blue Iris Cam Plugin Version 0.3
+Vera Blue Iris Cam Plugin Version 0.4
 ===========
 
 Plugin Programmed by undertoe@chemlab.org
@@ -12,11 +12,15 @@ Plugin Features
 - Motion Detection Sensor Support in Vera
 - MJPEG Stream URL
 - Username & Password Support
+- Option to Switch Motion Controls to Preset
+- Option to Switch Zoom to Preset
+- Option to for Horizontal Control Reverse
+- Option to for Vertical Control Reverse
 
 Requirements
 -----------
 
-Blue Iris system running with cameras configured in blue iris
+Blue Iris system running with cameras configured in blue iris along with blue iris webserver configured and running on local network.
 
 Install Video
 -----------

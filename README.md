@@ -1,4 +1,4 @@
-Vera Blue Iris Cam Plugin Version 0.3
+Vera Blue Iris Cam Plugin Version 0.4
 ===========
 ![Blue Iris Vera Plugin](https://dl.dropboxusercontent.com/u/617004/BlueIris/Vera-Blue-Iris_LG.png "Blue Iris Vera Plugin")
 
@@ -12,11 +12,15 @@ Plugin Features
 - PTZ Function
 - MJPEG Stream URL
 - Username & Password Support
+- Option to Switch Motion Controls to Preset
+- Option to Switch Zoom to Preset
+- Option to for Horizontal Control Reverse
+- Option to for Vertical Control Reverse
 
 Requirements
 -----------
 
-Blue Iris system running with cameras configured in blue iris
+Blue Iris system running with cameras configured in blue iris along with blue iris webserver configured and running on local network.
 
 Install Video
 -----------
