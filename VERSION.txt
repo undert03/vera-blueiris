@@ -1,5 +1,10 @@
 Revisions
 
+0.4 - Added Option to convert Motion Controls to Preset
+			Zoom to Preset
+			Horizontal Control Reverse
+			Vertical Control Reverse
+			
 0.3 - Added Motion Detection Sensor Support in Vera
 
 0.2 - Initial release of plugin

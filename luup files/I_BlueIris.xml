@@ -79,7 +79,7 @@
 		  
       function lug_startup(parentDevice)
       	PARENT_DEVICE = parentDevice
-      	BI_Log("Version 0.2 Started")
+      	BI_Log("Version 0.4 Started")
       	
       	local Cname = luup.attr_get("name", parentDevice)
       	if ( (Cname == "") or (Cname == "IP Camera Ext") ) then
@@ -91,7 +91,36 @@
         lug_password 	= luup.attr_get("password", parentDevice)
         lug_camname 	= BI_CAM_GetVar("CameraName", DEF_camname )
         lug_montion 	= BI_CAM_GetVar("EnableMotionSensor", 0 )
-          
+        lug_panpreset		= BI_CAM_GetVar("Pan2Preset", 0 ) 
+        lug_zoompreset	= BI_CAM_GetVar("Zoom2Preset", 0 ) 
+        lug_rev_hori	= BI_CAM_GetVar("ReverseHorizontal", 0 )
+        lug_rev_vert	= BI_CAM_GetVar("ReverseVertical", 0 )
+        -- Set Control Features - Start
+        Controls = {["u"] = "2", ["d"] = "3", ["l"] = "0", ["r"] ="1", ["zi"] = "5", ["zo"] = "6"} -- default control state
+        if (lug_panpreset == "1") then
+        	Controls["u"] = "9"
+        	Controls["d"] = "11"
+        	Controls["l"] = "8"
+        	Controls["r"] = "10"        	
+        	if ( lug_zoompreset == "1" ) then
+        		Controls["zi"] = "12"
+        		Controls["zo"] = "13"
+        	end
+        elseif ( lug_zoompreset == "1" ) then
+        	Controls["zi"] = "8"
+        	Controls["zo"] = "9"
+       	else
+       		if ( lug_rev_hori == "1" ) then
+        		Controls["l"] = "1"
+        		Controls["r"] = "0"
+       		end
+       		if ( lug_rev_vert == "1" ) then
+        		Controls["u"] = "3"
+        		Controls["d"] = "2"       		
+       		end       		
+        end
+        -- Set Control Features - End
+        
 				BI_CAM_GetVar( "URL", "/image/".. lug_camname )
 				BI_CAM_GetVar( "DirectStreamingURL", "/mjpg/".. lug_camname .."/video.mjpg" )
 				
@@ -158,42 +187,42 @@
          <serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
          <name>MoveLeft</name>
          <job>
-            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=0", HTTPtimeout, lug_username, lug_password)
+            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=" .. Controls["l"], HTTPtimeout, lug_username, lug_password)
          </job>
       </action>
       <action>
          <serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
          <name>MoveRight</name>
          <job>
-            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=1", HTTPtimeout, lug_username, lug_password)
+            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=" .. Controls["r"], HTTPtimeout, lug_username, lug_password)
          </job>
       </action>
       <action>
          <serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
          <name>MoveUp</name>
          <job>
-            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=2", HTTPtimeout, lug_username, lug_password)
+            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=" .. Controls["u"], HTTPtimeout, lug_username, lug_password)
          </job>
       </action>
       <action>
          <serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
          <name>MoveDown</name>
          <job>
-            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=3", HTTPtimeout, lug_username, lug_password)
+            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=" .. Controls["d"], HTTPtimeout, lug_username, lug_password)
          </job>
       </action>
       <action>
          <serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
          <name>ZoomOut</name>
          <job>
-            luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=6", HTTPtimeout, lug_username, lug_password)
+         		luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=" .. Controls["zo"], HTTPtimeout, lug_username, lug_password)
          </job>
       </action>
       <action>
          <serviceId>urn:micasaverde-com:serviceId:PanTiltZoom1</serviceId>
          <name>ZoomIn</name>
          <job>
-           	luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=5", HTTPtimeout, lug_username, lug_password)
+         		luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=" .. Controls["zi"], HTTPtimeout, lug_username, lug_password)
          </job>
       </action>
 			<action>

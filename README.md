@@ -47,7 +47,7 @@ Ip Address: <IP ADDRESS OF BLUE IRIS server>:<Port>
 - Reload Vera
 
 
-Configuration
+Initial Configuration
 -----------
 
 Go to the Camera Tab and you should now see
@@ -133,6 +133,25 @@ You would put this in the Parameters Box: 192.168.1.2 123
 
 - If everything works you can then OK and OK out of the camera properties settings
 
+Configuration Options
+-----------
+
+Located under Device Settings > Advance Tab
+
+**Pan2Preset** : ( **0** = Disabled, **1** = Enabled) - This option converts your Left, Right, Up, Down to Presets.
+Left = Preset 1, Up = Preset 2, Right = Preset 3, Down = Preset 4. This is useful if you have a fixed camera
+and want to gain preset control on a mobile app that may not have presets (ie: iVera)
+
+**Zoom2Preset** : ( **0** = Disabled, **1** = Enabled) - This option converts your ZoomIn and ZoomOut to Presets.
+ZoomIn = Preset 1, ZoomOut = Preset 2. If you have Pan2Preset enabled, ZoomIn = Preset 5, ZoomOut = Preset 6
+
+**ReverseHorizontal** : ( **0** = Disabled, **1** = Enabled) - Reverse the control of Left and Right. Pan2Preset & Zoom2Preset must be
+set to 0 for this to work. I also recommend letting Blue Iris handle all the control configuration but just in case someone needs
+it I added this option 
+
+**ReverseVertical** : ( **0** = Disabled, **1** = Enabled) - Reverse the control of Up and Down. Pan2Preset & Zoom2Preset must be
+set to 0 for this to work. I also recommend letting Blue Iris handle all the control configuration but just in case someone needs
+it I added this option
 
 Screenshots
 -----------
