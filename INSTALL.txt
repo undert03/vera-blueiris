@@ -45,6 +45,18 @@ Click "Create Device"
 
 - Reload Vera
 
+Upgrade
+-----------
+
+If you have already installed and configured the Blue Iris Plugin then this is all you need to do to upgrade to the newest version.
+
+- Extract Vera Blue Iris zip file you downloaded from here 
+
+- Navigate to apps --> develop apps --> Luup files in vera UI
+
+- Add I_BlueIris.xml under the luup files folder you extracted from the zip *check restart luup after upload
+
+- After Luup restarts you will have the new features and configuration options
 
 Configuration
 -----------
