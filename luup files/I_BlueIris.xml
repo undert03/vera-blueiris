@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <implementation>
+	 <handleChildren>1</handleChildren>
    <functions>
    		local CAM_SID = "urn:micasaverde-com:serviceId:Camera1"
    		local CMD_SID = "urn:micasaverde-com:serviceId:CameraMotionDetection1"
@@ -161,12 +162,8 @@
 					
 					luup.variable_set(SES_SID, "OnTime", tostring(DEF_Triptimeout), MotionSID)
 					luup.register_handler("trip", "blueiris_tripped")
-				elseif ( (lug_montion == "0") and ( tonumber(MotionSID) > 0) ) then
 				
-					-- Delete Motion Sensor
-					BI_Log("Not Implemented but we would delete Sensor ID# " .. tostring(MotionSID) )
-				
-				elseif (tonumber(MotionSID) > 0) then
+				elseif ( (lug_montion == "1") and (tonumber(MotionSID) > 0) ) then
 					-- Check if Name Changed
 					local CSname = luup.devices[tonumber(MotionSID)].name
 					local NSname = luup.devices[parentDevice].description .." Motion Sensor"
@@ -175,6 +172,13 @@
 					end
 					luup.variable_set(SES_SID, "OnTime", tostring(DEF_Triptimeout), MotionSID)
 					luup.register_handler("trip", "blueiris_tripped")
+
+				elseif ( (lug_montion == "0") and ( tonumber(MotionSID) > 0) ) then
+					-- Delete Motion Sensor
+					luup.inet.wget("http://127.0.0.1:3480/data_request?id=device&amp;action=delete&amp;device=".. tostring(MotionSID) )
+					luup.variable_set(CAM_SID, "EnableMotionSensor", 0, parentDevice)
+					luup.variable_set(CAM_SID, "DirectStreamingURL", 0, parentDevice)
+					BI_Log("Deleting Sensor Since EnableMotionSensor is set to 0  Sensor ID# " .. tostring(MotionSID) )
 
 				else
 					if(DEBUG) then BI_Log("SKIPPING Montion Sensor for Blue Iris Cam #" .. parentDevice ) end
@@ -232,6 +236,16 @@
 					local presetNumber = tonumber(lul_settings.presetNumber, 10) or 1
 					presetNumber = tonumber( presetNumber ) + 7
 					luup.inet.wget("http://" .. lug_ip .. "/cam/".. lug_camname .."/pos=" .. presetNumber, HTTPtimeout, lug_username, lug_password)
+				</job>
+			</action>
+			<action>
+				<serviceId>urn:micasaverde-com:serviceId:SecuritySensor1</serviceId>
+				<name>SetArmed</name>
+				<job>
+					MotionSID = tonumber(luup.variable_get(CMD_SID, "MotionSensorID", parentDevice) , 10) or 0
+					if( MotionSID > 0 ) then
+						luup.variable_set("urn:micasaverde-com:serviceId:SecuritySensor1", "Armed", lul_settings.newArmedValue, tonumber(MotionSID) )
+					end
 				</job>
 			</action>
    </actionList>

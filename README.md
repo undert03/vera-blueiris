@@ -1,4 +1,4 @@
-Vera Blue Iris Cam Plugin Version 0.4
+Vera Blue Iris Cam Plugin Version 0.5
 ===========
 ![Blue Iris Vera Plugin](https://dl.dropboxusercontent.com/u/617004/BlueIris/Vera-Blue-Iris_LG.png "Blue Iris Vera Plugin")
 
@@ -10,6 +10,8 @@ Plugin Features
 
 - Blue Iris Camera Intergration
 - PTZ Function
+- Motion Detection: Sensor Support in Vera
+- Motion Detection: Arm or Bypass Mode
 - MJPEG Stream URL
 - Username & Password Support
 - Option to Switch Motion Controls to Preset
