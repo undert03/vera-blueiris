@@ -1,7 +1,7 @@
 Revisions
 
 0.5 - Bug fix: Motion Sensor can now be set to Armed or Bypass
-			Bug fix: If you disable motion detection the montion sensor would still be available in vera
+			Bug fix: If you disable motion detection the motion sensor would still be available in Vera
 			now if you set "EnableMotionSensor" back to 0 it will delete the associated Motion sensor on reload.
 
 0.4 - Added Option to convert Motion Controls to Preset
