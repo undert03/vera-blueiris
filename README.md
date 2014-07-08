@@ -25,13 +25,20 @@ Requirements
 Blue Iris system running with cameras configured in blue iris along with blue iris webserver configured and running on local network.
 http://www.blueirissoftware.com/
 
-Install Video
+
+Installation - Vera App Market Place
+-----------
+
+- Install from Market Place then follow the configuration instructions
+
+Pending Approval
+
+Install & Config Video
 -----------
 
 [![Vera Blue Iris Plugin How-to Video](http://img.youtube.com/vi/flDc84wrue8/0.jpg)](http://www.youtube.com/watch?v=flDc84wrue8)
 
-
-Installation
+Installation - Manual
 -----------
 
 - Extract Vera Blue Iris zip file you downloaded from here 
