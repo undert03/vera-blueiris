@@ -72,9 +72,10 @@
 					return
 				end
 	
-				-- Store the motion sensor ID in a variable.
-				-- luup.log("(".. luup.devices[lug_device].description .."::State=".. state ..") Motion sensor is device #".. sensorId ..".")
-				luup.variable_set(CMD_SID, "MotionSensorID", tostring(sensorId), PARENT_DEVICE)
+				local setsensor = BI_CAM_GetVar("EnableMotionSensor", 0 )
+				if ( tonumber(setsensor) == 1 ) then
+					luup.variable_set(CMD_SID, "MotionSensorID", tostring(sensorId), PARENT_DEVICE)
+				end
 				return sensorId
 			end
 		  
@@ -177,7 +178,7 @@
 					-- Delete Motion Sensor
 					luup.inet.wget("http://127.0.0.1:3480/data_request?id=device&amp;action=delete&amp;device=".. tostring(MotionSID) )
 					luup.variable_set(CAM_SID, "EnableMotionSensor", 0, parentDevice)
-					luup.variable_set(CAM_SID, "MotionSensorID", 0, parentDevice)
+					luup.variable_set(CMD_SID, "MotionSensorID", 0, parentDevice)
 					BI_Log("Deleting Sensor Since EnableMotionSensor is set to 0  Sensor ID# " .. tostring(MotionSID) )
 
 				else
