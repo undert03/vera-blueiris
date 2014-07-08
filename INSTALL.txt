@@ -21,6 +21,7 @@ Requirements
 -----------
 
 Blue Iris system running with cameras configured in blue iris along with blue iris webserver configured and running on local network.
+http://blueirissoftware.com/
 
 Install Video
 -----------
