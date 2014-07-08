@@ -177,7 +177,7 @@
 					-- Delete Motion Sensor
 					luup.inet.wget("http://127.0.0.1:3480/data_request?id=device&amp;action=delete&amp;device=".. tostring(MotionSID) )
 					luup.variable_set(CAM_SID, "EnableMotionSensor", 0, parentDevice)
-					luup.variable_set(CAM_SID, "DirectStreamingURL", 0, parentDevice)
+					luup.variable_set(CAM_SID, "MotionSensorID", 0, parentDevice)
 					BI_Log("Deleting Sensor Since EnableMotionSensor is set to 0  Sensor ID# " .. tostring(MotionSID) )
 
 				else
