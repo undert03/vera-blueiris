@@ -29,7 +29,7 @@ Installation - Vera App Market Place
 
 - Install from Market Place then follow the configuration instructions
 
-Pending Approval
+http://apps.mios.com/plugin.php?id=6916
 
 Install & Config Video
 -----------
@@ -154,3 +154,8 @@ it I added this option
 ReverseVertical : ( 0 = Disabled, 1 = Enabled) - Reverse the control of Up and Down. Pan2Preset & Zoom2Preset must be
 set to 0 for this to work. I also recommend letting Blue Iris handle all the control configuration but just in case someone needs
 it I added this option
+
+Message Board Discussion
+-----------
+
+http://forum.micasaverde.com/index.php/topic,25828.0.html
