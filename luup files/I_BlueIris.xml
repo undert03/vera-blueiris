@@ -246,6 +246,9 @@
 					MotionSID = tonumber(luup.variable_get(CMD_SID, "MotionSensorID", parentDevice) , 10) or 0
 					if( MotionSID > 0 ) then
 						luup.variable_set("urn:micasaverde-com:serviceId:SecuritySensor1", "Armed", lul_settings.newArmedValue, tonumber(MotionSID) )
+						return 4
+					else
+						return 2
 					end
 				</job>
 			</action>
