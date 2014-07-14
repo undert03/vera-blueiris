@@ -27,14 +27,12 @@ http://blueirissoftware.com/
 Installation - Vera App Market Place
 -----------
 
-- Install from Market Place
+- Install from Market Place http://apps.mios.com/plugin.php?id=6916
 - Should create a Camera under Devices > Cameras named "Blue Iris CAM XXX"
 - Edit that device and on the Settings tab change IP address to your blue iris LAN IP address should be an internal ip address followed by a port
 - On the Advanced tab change the CameraName to whatever your BlueIris short name is for the camera you want
 - Close out of the popup and hit save in vera, when it reloads you should have your camera
 
-
-http://apps.mios.com/plugin.php?id=6916
 
 Install & Config Video
 -----------
